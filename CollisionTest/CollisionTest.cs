@@ -41,26 +41,26 @@ namespace CollisionTest
             };
 
             blocks = new Obstacle[] {
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0),
-                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0)
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15)),
+                new Obstacle(this, new Rectangle(rand.Next(mapBounds.Width),-rand.Next(mapBounds.Height),rand.Next(25,100),rand.Next(25,100)), 0, rand.Next(5,15))
             };
 
             base.Initialize();
