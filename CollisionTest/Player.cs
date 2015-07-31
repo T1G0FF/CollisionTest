@@ -36,5 +36,14 @@ namespace CollisionTest
         {
             spriteBatch.Draw(DummyTexture, new Vector2(Geometry.X, Geometry.Y), _color);
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            if(this.Health.Current <= 0 )
+            {
+                CurrentState = State.Dead;
+            }
+            base.Update(gameTime);
+        }
     }
 }
