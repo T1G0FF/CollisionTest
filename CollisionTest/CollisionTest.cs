@@ -140,7 +140,7 @@ namespace CollisionTest
                     p.Health.Current = p.Health.Current - blocks[0].Damage.Generic;
                 }
 
-                if (p.CurrentState == Player.State.Dead && _inputState.IsPause(p._index))
+                if (p.CurrentState == Player.State.Dead && _inputState.IsSelect(p._index))
                 {
                     p.Health.Current = p.Health.Max;
                     p.CurrentState = Player.State.Walking;
