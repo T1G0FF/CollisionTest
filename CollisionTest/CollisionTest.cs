@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TGameLibrary;
+using TGameLibrary.Enums;
 using TGExtensions;
 
 namespace CollisionTest
@@ -18,6 +19,7 @@ namespace CollisionTest
         SpriteFont Consolas56;
         
         private InputState _inputState;
+        private GameState _gameState;
         private Rectangle mapBounds;
         private Player[] players;
         private Obstacle[] blocks;
@@ -30,6 +32,7 @@ namespace CollisionTest
             graphics.PreferredBackBufferHeight = 768;
             graphics.ApplyChanges();
             _inputState = new InputState();
+            _gameState = new GameState();
             Content.RootDirectory = "Content";
         }
 
@@ -67,15 +70,18 @@ namespace CollisionTest
 
             foreach (Obstacle block in blocks)
             {
-                block.Damage.Generic = 10;
+                block.DamageType.Add("Collision", new AnimatedSprite.DamageStruct(0, 10));
             }
 
-            foreach(Player p in players)
+            foreach(Player player in players)
             {
-                p.Status.Invunerable = false;
-                p.Health.Max = 100;
-                p.Health.Current = p.Health.Max;
+                player.Status.Invunerable = false;
+                player.DamageType.Add("Collision", new AnimatedSprite.DamageStruct(0, 0));
+                player.Health.Max = 100;
+                player.Health.Current = player.Health.Max;
             }
+
+            _gameState.Current = GameStates.Playing;
 
             base.Initialize();
         }
@@ -119,34 +125,49 @@ namespace CollisionTest
                 Exit();
             }
 
-            foreach (Obstacle b in blocks)
+            if (_gameState.Current == GameStates.Playing)
             {
-                b.OffsetPosition(0, b.MovementSpeed);
-                if (b.Position.Y > mapBounds.Height)
+                foreach (Obstacle b in blocks)
                 {
-                    float RandX = rand.Next(mapBounds.Width);
-                    b.SetPosition(RandX, 0 - b.Footprint.Height);
+                    b.OffsetPosition(0, b.MovementSpeed);
+                    if (b.Position.Y > mapBounds.Height)
+                    {
+                        float RandX = rand.Next(mapBounds.Width);
+                        b.SetPosition(RandX, 0 - b.Footprint.Height);
+                    }
+                }
+
+                foreach (Player player in players)
+                {
+                    player.UpdateMovement(_inputState, player._index);
+                    bool collideMap = (player.CheckBounds(mapBounds) & (byte)Collide.Bottom) == (byte)Collide.Bottom;
+                    int collidedBlocks = player.CheckCollisions(blocks);
+                    if (collideMap && collidedBlocks != 0)
+                    {
+                        player.TakeDamage("Collision", blocks[0].DamageType["Collision"].Damage * collidedBlocks);
+                    }
+
+                    if (player.CurrentState == State.Dead && _inputState.IsSelect(player._index))
+                    {
+                        player.Health.Current = player.Health.Max;
+                        player.CurrentState = State.Alive;
+                    }
+
+                    player.Update(gameTime);
                 }
             }
-
-            foreach (Player p in players)
+            else
             {
-                p.UpdateMovement(_inputState, p._index);
-                bool collideMap = p.CheckBounds(mapBounds);
-                int collidedBlocks = p.CheckCollisions(blocks);
-
-                if (collideMap && collidedBlocks != 0 && !p.Status.Invunerable)
+                foreach (Player player in players)
                 {
-                    p.Health.Current = p.Health.Current - blocks[0].Damage.Generic;
+                    if (player.CurrentState == State.Dead && _inputState.IsSelect(player._index))
+                    {
+                        _gameState.Current = GameStates.Playing;
+                        player.Health.Current = player.Health.Max;
+                        player.CurrentState = State.Alive;
+                        player.SetPosition(new Vector2(((GraphicsDevice.Viewport.Width / 2) - player.Footprint.Width / 2), GraphicsDevice.Viewport.Height / 2));
+                    }
                 }
-
-                if (p.CurrentState == Player.State.Dead && _inputState.IsSelect(p._index))
-                {
-                    p.Health.Current = p.Health.Max;
-                    p.CurrentState = Player.State.Walking;
-                }
-
-                p.Update(gameTime);
             }
 
             base.Update(gameTime);
@@ -168,29 +189,41 @@ namespace CollisionTest
             }
 
             string healthString = "";
+            bool allDead = true;
             foreach (Player player in players)
             {
-                if (player.CurrentState == Player.State.Dead)
+                if (player.CurrentState == State.Dead)
                 {
-                    string gameOverString = "GAME OVER!";
-                    // Fits Text in centre of screen
-                    Vector2 textSize = Consolas56.MeasureString(gameOverString)/2;
-                    Vector2 centerScreen = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
-                    Vector2 textPosition = centerScreen - textSize;
-                    spriteBatch.DrawString(Consolas56, gameOverString, textPosition, Color.Red, 0.0F, Vector2.Zero, 1.0F, SpriteEffects.None, 1.0F);
+                    allDead = allDead & true;
                 }
                 else
                 {
+                    allDead = allDead & false;
                     player.Draw(spriteBatch, player._color);
-                    healthString += string.Format("Player {0}: {1:P}", player._index, player.Health.Percent);
+                    healthString += string.Format("Player {0}: {1:F0}%", player._index, player.Health.Percent);
                     healthString += System.Environment.NewLine;
                 }
             }
-            // Fits Text just above bottom of screen and removes final line-break
-            float textWidth = Consolas14.MeasureString(healthString).Y;
-            textWidth = textWidth - (textWidth / (players.Length + 1));
-            spriteBatch.DrawString(Consolas14, healthString, new Vector2(0, graphics.GraphicsDevice.Viewport.Height - textWidth), Color.White);
-            
+                
+            if (allDead)
+            {
+                _gameState.Current = GameStates.Paused;
+                    
+                string gameOverString = "GAME OVER!";
+                // Fits Text in centre of screen
+                Vector2 textSize = Consolas56.MeasureString(gameOverString) / 2;
+                Vector2 centerScreen = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
+                Vector2 textPosition = centerScreen - textSize;
+                spriteBatch.DrawString(Consolas56, gameOverString, textPosition, Color.Red, 0.0F, Vector2.Zero, 1.0F, SpriteEffects.None, 1.0F);
+            }
+            else
+            {
+                // Fits Text just above bottom of screen and removes final line-break
+                float textWidth = Consolas14.MeasureString(healthString).Y;
+                textWidth = textWidth - (textWidth / (players.Length + 1));
+                spriteBatch.DrawString(Consolas14, healthString, new Vector2(0, graphics.GraphicsDevice.Viewport.Height - textWidth), Color.White);
+            }
+
             spriteBatch.End();
 
             base.Draw(gameTime);

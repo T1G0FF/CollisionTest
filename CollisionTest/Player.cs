@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TGameLibrary;
+using TGameLibrary.Enums;
 
 namespace CollisionTest
 {
@@ -35,15 +36,6 @@ namespace CollisionTest
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(DummyTexture, new Vector2(Geometry.X, Geometry.Y), _color);
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            if(this.Health.Current <= 0 )
-            {
-                CurrentState = State.Dead;
-            }
-            base.Update(gameTime);
         }
     }
 }
