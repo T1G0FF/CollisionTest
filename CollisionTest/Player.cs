@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using TGameLibrary;
-using TGameLibrary.Enums;
+using TGGameLibrary;
+using TGGameLibrary.Enums;
 
 namespace CollisionTest
 {
