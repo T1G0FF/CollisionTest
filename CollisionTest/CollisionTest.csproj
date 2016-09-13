@@ -68,8 +68,8 @@
       <Project>{2325f8e8-e63d-4b80-9572-2a470d6d311b}</Project>
       <Name>TGExtensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\TGameLibrary\TGGameLibrary\TGGameLibrary.csproj">
-      <Project>{7a7c46cc-0c6b-4395-b281-1b6b78e7b9d4}</Project>
+    <ProjectReference Include="..\..\TGGameLibrary\TGGameLibrary\TGGameLibrary.csproj">
+      <Project>{eac09b45-5ffc-4998-9a04-54fede5abdce}</Project>
       <Name>TGGameLibrary</Name>
     </ProjectReference>
   </ItemGroup>

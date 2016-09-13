@@ -24,7 +24,8 @@ namespace CollisionTest
         private Player[] players;
         private Obstacle[] blocks;
         private Random rand;
-        
+        private Quadtree quad;
+
         public CollisionTest()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -83,6 +84,8 @@ namespace CollisionTest
 
             _gameState.Current = GameStates.Playing;
 
+            quad = new Quadtree(0, mapBounds);
+
             base.Initialize();
         }
 
@@ -127,6 +130,7 @@ namespace CollisionTest
 
             if (_gameState.Current == GameStates.Playing)
             {
+                quad.Clear();
                 foreach (Obstacle b in blocks)
                 {
                     b.OffsetPosition(0, b.MovementSpeed);
@@ -135,13 +139,14 @@ namespace CollisionTest
                         float RandX = rand.Next(mapBounds.Width);
                         b.SetPosition(RandX, 0 - b.Footprint.Height);
                     }
+                    quad.Add(b);
                 }
 
                 foreach (Player player in players)
                 {
                     player.UpdateMovement(_inputState, player._index);
                     bool collideMap = (player.CheckBounds(mapBounds) & (byte)Collide.Bottom) == (byte)Collide.Bottom;
-                    int collidedBlocks = player.CheckCollisions(blocks);
+                    int collidedBlocks = player.CheckCollisions(quad);
                     if (collideMap && collidedBlocks != 0)
                     {
                         player.TakeDamage("Collision", blocks[0].DamageType["Collision"].Damage * collidedBlocks);
